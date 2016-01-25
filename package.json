@@ -1,0 +1,14 @@
+{
+  "name": "hipster-mocks",
+  "version": "0.1.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-imagemin": "^1.0.0",
+    "grunt-gm": "^0.4.3"
+  }
+}
