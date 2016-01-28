@@ -1,8 +1,8 @@
 module.exports = function(grunt) {
 
-  var adcfg = grunt.file.readJSON('adconfig.json');
-  var awscfg = grunt.file.readJSON('awsInfo.json');
-  var ftpcfg = grunt.file.readJSON('ftpInfo.json');
+  // var adcfg = grunt.file.readJSON('adconfig.json');
+  // var awscfg = grunt.file.readJSON('awsInfo.json');
+  // var ftpcfg = grunt.file.readJSON('ftpInfo.json');
 
   // 1. All configuration goes here 
   grunt.initConfig({

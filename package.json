@@ -7,7 +7,7 @@
     "url": ""
   },
   "devDependencies": {
-    "grunt": "~0.4.1",
+    "grunt": "^0.4.5",
     "grunt-contrib-imagemin": "^1.0.0",
     "grunt-gm": "^0.4.3"
   }
