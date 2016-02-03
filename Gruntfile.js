@@ -1,8 +1,5 @@
 module.exports = function(grunt) {
 
-  // var adcfg = grunt.file.readJSON('adconfig.json');
-  // var awscfg = grunt.file.readJSON('awsInfo.json');
-  // var ftpcfg = grunt.file.readJSON('ftpInfo.json');
 
   // 1. All configuration goes here 
   grunt.initConfig({
@@ -10,6 +7,22 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
 
+    /////////////////////////////////////////// Local Server
+
+    connect: {
+      server: {
+        options: {
+          livereload: true,
+          debug: true,
+          protocol: 'http',
+          hostname: '*',
+          port:8087,
+          base: 'development',
+          keepalive: true,
+          open: true
+        }
+      }
+    },
 
 
     /////////////////////////////////////////// GM mocks
@@ -31,7 +44,7 @@ module.exports = function(grunt) {
           },
           files: [
             {
-              cwd: 'mocks',
+              cwd: 'development/mocks',
               dest: 'development/_images',
               expand: true,
               filter: 'isFile',
@@ -54,11 +67,11 @@ module.exports = function(grunt) {
                 }, {
                   // add laptop 
                   command: ['composite'],
-                  in: ['mocks/template/macbook.png'],
+                  in: ['development/mocks/template/macbook.png'],
                 }, {
                   // ad reflection 
                  command: ['composite'],
-                 in: ['mocks/template/shine.png'],
+                 in: ['development/mocks/template/shine.png'],
                 }, {
                   // final crop 
                  crop:[1160, 794, 0, 0],
@@ -75,13 +88,12 @@ module.exports = function(grunt) {
         dynamic: {
           files: [{
             expand: true,
-            cwd: 'mocks/out/',
+            cwd: 'development/_images',
             src: ['*.{png,jpg,gif}', '**/*.{png,jpg,gif}'],
             dest: 'production/_images/'
           }]
         }
       },
-
 
 
     });
@@ -90,6 +102,8 @@ module.exports = function(grunt) {
 
 
     // 3. Where we tell Grunt we plan to use this plug-in.
+    //grunt.loadNpmTasks('grunt-prompt');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-gm');
     grunt.loadNpmTasks('grunt-contrib-imagemin');
 
@@ -101,7 +115,12 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [
       'gm', 
       'imagemin',
+      'connect'
     ]);
 
+
+
+
+  
 
 };
