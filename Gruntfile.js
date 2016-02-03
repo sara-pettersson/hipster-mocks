@@ -3,8 +3,11 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
+
+		// JS
+
 		concat: {
-			// 2. Configuration for concatinating files goes here. (install it first)
+		// 2. Configuration for concatinating files goes here. (install it first)
 			dist: {
 				src:[
 					'js/libs/*.js',              //All JS in the libs folder
@@ -14,6 +17,48 @@ module.exports = function(grunt) {
 			}
 
 
+		},
+
+		// minify the js 
+		uglify: {
+		    build: {
+		        src: 'js/build/production.js',
+		        dest: 'js/build/production.min.js'
+		    }
+		},
+
+		// SASS
+
+		sass: {
+			dist: {
+				options: {
+					style: 'compressed'
+
+				},
+				files: {
+					'styles/css/build/site.css' : 'styles/sass/global.scss'
+				}
+
+			}
+		},
+
+		// Watch the SASS and JS files ofr changes
+
+		watch: {
+			scripts: {
+				files: ['js/*.js'],
+				tasks: ['concat', 'uglify'],
+				options: {
+					spawn:false, 					// default
+				},
+			},
+			css: {
+				files:['styles/sass/*.scss'],
+				tasks: ['sass'],
+				options: {
+					spawn: false,
+				},
+			}
 		},
 
 		//1. Using grunt-gm with graphicsmagick plugin to place concepts into a hipster frame
@@ -97,6 +142,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-gm'); //make sure install graphicsmagick inconjuction, info: https://www.npmjs.com/package/gm
     grunt.loadNpmTasks('grunt-contrib-imagemin');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
 
 
@@ -105,6 +153,6 @@ module.exports = function(grunt) {
 	//- Running grunt will not destroy previous work by overwriting from templates
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
 
-    grunt.registerTask('default', ['imagemin', 'gm', 'concat', 'sass' ]);
+    grunt.registerTask('default', ['imagemin', 'gm', 'concat', 'uglify', 'sass', 'watch' ]);
 };
 
