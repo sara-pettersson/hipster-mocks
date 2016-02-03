@@ -28,7 +28,6 @@ module.exports = function(grunt) {
 		},
 
 		// SASS
-
 		sass: {
 			dist: {
 				options: {
@@ -77,7 +76,7 @@ module.exports = function(grunt) {
 						dest: 'development/build/images',      // Destination path prefix
 						expand: true, 				    // Enable dynamic expansion
 						filter:'isFile',
-						src: ['**/**/*',  '!**/template/'],   //target files
+						src: ['**/**/*', '**/**/**/*', '!**/template/'],   //target files
 						options: {
 				            stopOnError: true
 			            },
@@ -129,6 +128,11 @@ module.exports = function(grunt) {
 	  },
 
 	});
+
+
+
+
+
 
 
 
