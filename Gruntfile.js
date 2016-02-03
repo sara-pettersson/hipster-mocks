@@ -3,10 +3,18 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
-		// concat: {
-		// 	// 2. Configuration for concatinating files goes here. (install it first)
+		concat: {
+			// 2. Configuration for concatinating files goes here. (install it first)
+			dist: {
+				src:[
+					'js/libs/*.js',              //All JS in the libs folder
+					'js/global/.js'  			 // Global.js is where we will right our own code
+				],
+				dest: 'js/build/production.js',   //concats all into one file
+			}
 
-		// }
+
+		},
 
 		//1. Using grunt-gm with graphicsmagick plugin to place concepts into a hipster frame
 		gm: {
@@ -80,14 +88,16 @@ module.exports = function(grunt) {
 
 
 
+
+
 	// 3. Where we tell Grunt we plan to use this plug-in. Install plugins with --save-dev
 
 
   
     grunt.loadNpmTasks('grunt-gm'); //make sure install graphicsmagick inconjuction, info: https://www.npmjs.com/package/gm
     grunt.loadNpmTasks('grunt-contrib-imagemin');
-    // grunt.loadNpmTasks('grunt-contrib-concat');
-    // grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
 
 
@@ -95,6 +105,6 @@ module.exports = function(grunt) {
 	//- Running grunt will not destroy previous work by overwriting from templates
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
 
-    grunt.registerTask('default', ['imagemin', 'gm']);
+    grunt.registerTask('default', ['imagemin', 'gm', 'concat', 'sass' ]);
 };
 
