@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Watch the SASS and JS files ofr changes
+		// Watch the SASS and JS files for changes
 
 		watch: {
 			scripts: {
@@ -146,6 +146,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-string-replace');
 
 
 
@@ -153,6 +154,6 @@ module.exports = function(grunt) {
 	//- Running grunt will not destroy previous work by overwriting from templates
     // 4. Where we tell Grunt what to do when we type "grunt" into the terminal.
 
-    grunt.registerTask('default', ['imagemin', 'gm', 'concat', 'uglify', 'sass', 'watch' ]);
+    grunt.registerTask('default', ['imagemin', 'gm', 'concat', 'uglify', 'sass', 'watch', 'string-replace']);
 };
 
