@@ -74,7 +74,7 @@ module.exports = function(grunt) {
 				files: [
 					{
 						cwd: 'development/mocks',       // Src matches are relative to this path
-						dest: 'production/images',      // Destination path prefix
+						dest: 'development/build/images',      // Destination path prefix
 						expand: true, 				    // Enable dynamic expansion
 						filter:'isFile',
 						src: ['**/**/*',  '!**/template/'],   //target files
@@ -123,7 +123,7 @@ module.exports = function(grunt) {
 	        expand: true,
 	        cwd: 'development/mocks/',							 // Src path for minification 
 	        src: ['*.{png,jpg,gif}', '*.{png,jpg,gif}'],		 // [file], [template frame]
-	        dest: 'production/images/'							 // Destination output
+	        dest: 'development/build/images/'							 // Destination output
 	      }]
 	    }
 	  },
