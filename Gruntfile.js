@@ -17,7 +17,7 @@ module.exports = function(grunt) {
           protocol: 'http',
           hostname: '*',
           port:8087,
-          base: 'development',
+          base: 'development/build',
           keepalive: true,
           open: true
         }
@@ -32,18 +32,18 @@ module.exports = function(grunt) {
 		// 2. Configuration for concatinating files goes here. (install it first)
 			dist: {
 				src:[
-					'js/libs/*.js',              //All JS in the libs folder
-					'js/global/.js'  			 // Global.js is where we will right our own code
+					'development/build/js/libs/*.js',              //All JS in the libs folder
+					'development/build/js/global.js'  			 // Global.js is where we will right our own code
 				],
-				dest: 'js/build/production.js',   //concats all into one file
+				dest: 'production/build/js/production.js',   //concats all into one file
 			}
 		},
 
 		// minify the js 
 		uglify: {
 	    build: {
-	        src: 'js/build/production.js',
-	        dest: 'js/build/production.min.js'
+	        src: 'production/build/js/production.js',
+	        dest: 'production/build/js/production.min.js'
 	    }
 		},
 
@@ -54,28 +54,40 @@ module.exports = function(grunt) {
 					style: 'compressed'
 				},
 				files: {
-					'styles/css/build/site.css' : 'styles/sass/global.scss'
+					'development/build/styles/css/site.css' : 'development/build/styles/sass/global.scss'
 				}
 			}
 		},
 
 		// Watch the SASS and JS files for changes
 		watch: {
+      options:{
+        livereload: true,
+      },
 			scripts: {
-				files: ['js/*.js'],
+				files: ['development/build/js/*.js'],
 				tasks: ['concat', 'uglify'],
 				options: {
 					spawn:false, 					// default
 				},
 			},
 			css: {
-				files:['styles/sass/*.scss'],
+				files:['development/build/styles/sass/*.scss'],
 				tasks: ['sass'],
 				options: {
 					spawn: false,
 				},
 			}
 		},
+
+    concurrent: {
+      watch: {
+          tasks: ['watch', 'connect'],
+          options: {
+              logConcurrentOutput: true
+          }
+      }
+    },
 
     //1. Using grunt-gm with graphicsmagick plugin to place concepts into a hipster frame
     gm: {
@@ -131,9 +143,9 @@ module.exports = function(grunt) {
       dynamic: {
         files: [{
           expand: true,
-          cwd: 'development/mocks/',               // Src path for minification 
+          cwd: 'development/build/images/',               // Src path for minification 
           src: ['*.{png,jpg,gif}', '*.{png,jpg,gif}'],     // [file], [template frame]
-          dest: 'development/build/images/'              // Destination output
+          dest: 'production/build/images/'              // Destination output
         }]
       }
     },
@@ -156,6 +168,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-string-replace');
+    grunt.loadNpmTasks('grunt-concurrent');
+
 
 
 	// default task when work is passed between developers or being worked on after again 
@@ -168,8 +182,7 @@ module.exports = function(grunt) {
       'concat', 
       'uglify', 
       'sass', 
-      'connect',
-      'watch', 
+      'concurrent:watch',
       'string-replace'
     ]);
   
