@@ -80,6 +80,7 @@ module.exports = function(grunt) {
 			}
 		},
 
+    // 
     concurrent: {
       watch: {
           tasks: ['watch', 'connect'],
@@ -91,7 +92,7 @@ module.exports = function(grunt) {
 
     //1. Using grunt-gm with graphicsmagick plugin to place concepts into a hipster frame
     gm: {
-      mocks: {
+      merge: {
         options: {
           // default: false, check if dest file exists and size > 0 
           skipExisting: false,
@@ -118,24 +119,46 @@ module.exports = function(grunt) {
               {
                 // extent and center the image with padding above it
                 gravity: ['South'],
-                          extent: [1160, 924],
+                extent: [1160, 924],
               }, 
                {
                 // FRAME IT-- add laptop 
                 command: ['composite'],
                 in: ['development/template/macbook.png'],
-              }, {
+              }, 
+              {
                 // adD reflection 
                command: ['composite'],
                in: ['development/template/shine.png'],
-              }, {
+              }, 
+              {
                 // final crop 
                crop:[1160, 794, 0, 0],
-              }
+              },
+              
             ]   
           }
         ]
-      }
+      },
+      resize: {
+        files: [
+          {
+            cwd: 'development/mocks',       // Src matches are relative to this path
+            dest: 'development/build/images/jpg',      // Destination path prefix
+            expand: true,             // Enable dynamic expansion
+            filter:'isFile',
+            src: ['**/**/*', '**/**/**/*', '!**/template/'],   //target files
+       
+            tasks: [
+              {
+                // resize image 
+                resize: [771],
+              },
+            ] 
+          }
+        ]
+
+       }
     },
 
     //2. Minification of the images      
@@ -149,6 +172,23 @@ module.exports = function(grunt) {
         }]
       }
     },
+
+    'string-replace': {
+      dist: {
+        files: {
+          'production/build/index.html': 'development/build/index.html',
+        },
+        options: {
+          replacements: [{
+            pattern: 'aboutus',
+            replacement: 'desktop'
+          }]
+        }
+      }
+    }
+
+
+
 
 
   });
@@ -183,7 +223,7 @@ module.exports = function(grunt) {
       'uglify', 
       'sass', 
       'concurrent:watch',
-      'string-replace'
+      //'string-replace'
     ]);
   
 };
