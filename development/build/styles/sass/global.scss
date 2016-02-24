@@ -1,3 +1,25 @@
 body {
-
+	text-align: center;
+	font-family: sans-serif;
+	background: #f3f4f5;
 }
+.desktop {
+	display: block;
+	margin: 0 auto;
+	background: url(/images/macbook.png);
+	position: relative;
+	width: 1160px;
+	height: 794px;
+	.scroll {
+		position: absolute;
+		left: 187px;
+		right: 0;
+		top: 130px;
+		width: 786px;
+    height: 491px;
+    overflow-y: scroll;
+
+
+	}
+}
+
