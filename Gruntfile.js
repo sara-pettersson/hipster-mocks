@@ -124,12 +124,12 @@ module.exports = function(grunt) {
                {
                 // FRAME IT-- add laptop 
                 command: ['composite'],
-                in: ['development/template/macbook.png'],
+                in: ['development/build/images/template/macbook.png'],
               }, 
               {
                 // adD reflection 
                command: ['composite'],
-               in: ['development/template/shine.png'],
+               in: ['development/build/images/template/shine.png'],
               }, 
               {
                 // final crop 
